@@ -30,7 +30,7 @@ cp src/environments/environment.example.ts src/environments/environment.ts
 cp src/environments/environment.example.ts src/environments/environment.development.ts
 ```
 
-и вписать свой ключ в поле `openWeatherApiKey` в обоих файлах. Эти файлы в `.gitignore` — ключ не попадёт в git.
+и вписать свой ключ в поле `openWeatherApiKey` в обоих файлах.
 
 ```bash
 npm start
