@@ -1,6 +1,6 @@
-import { APP_INITIALIZER, ApplicationConfig, LOCALE_ID, isDevMode, provideExperimentalZonelessChangeDetection } from '@angular/core';
+import { APP_INITIALIZER, ApplicationConfig, LOCALE_ID, isDevMode, provideZonelessChangeDetection } from '@angular/core';
 import { registerLocaleData } from '@angular/common';
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withXhr } from '@angular/common/http';
 import { provideServiceWorker } from '@angular/service-worker';
 import localeRu from '@angular/common/locales/ru';
 import { TranslationService } from './features/ui/shared/services/translation.service';
@@ -13,8 +13,8 @@ export function initializeApp(translationService: TranslationService) {
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideExperimentalZonelessChangeDetection(),
-    provideHttpClient(),
+    provideZonelessChangeDetection(),
+    provideHttpClient(withXhr()),
     provideServiceWorker('ngsw-worker.js', {
       enabled: !isDevMode(),
       registrationStrategy: 'registerWhenStable:30000',

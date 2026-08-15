@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges, ChangeDetectionStrategy } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { ForecastWeather } from '../../../ui/shared/interfaces/ForecastWeather';
 import { TranslatePipe } from '../../../ui/shared/pipes/translate.pipe';
@@ -29,11 +29,11 @@ interface DailyItem {
 }
 
 @Component({
-  selector: 'forecast-list',
-  templateUrl: './forecast-list.component.html',
-  styleUrls: ['./forecast-list.component.scss'],
-  standalone: true,
-  imports: [DatePipe, TranslatePipe, TruncatePipe, LoaderComponent]
+    selector: 'forecast-list',
+    templateUrl: './forecast-list.component.html',
+    styleUrls: ['./forecast-list.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    imports: [DatePipe, TranslatePipe, TruncatePipe, LoaderComponent]
 })
 export class ForecastListComponent implements OnChanges {
   @Input() forecastWeather: ForecastWeather | null = null;

@@ -11,7 +11,7 @@ export class TranslationService {
   constructor(private http: HttpClient) {}
 
   loadTranslations(lang: string): Observable<any> {
-    return this.http.get(`/assets/i18n/${lang}.json`).pipe(
+    return this.http.get(`assets/i18n/${lang}.json`).pipe(
       tap(translations => {
         this.setTranslations(translations);
         document.documentElement.lang = lang;

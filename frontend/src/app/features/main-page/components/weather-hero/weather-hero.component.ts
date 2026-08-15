@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 import { DatePipe, DecimalPipe } from '@angular/common';
 import { CurrentWeather } from '../../../ui/shared/interfaces/CurrentWeather';
 import { TranslatePipe } from '../../../ui/shared/pipes/translate.pipe';
@@ -12,11 +12,11 @@ const FORECAST_CODES: Record<string, string> = {
 };
 
 @Component({
-  selector: 'weather-hero',
-  templateUrl: './weather-hero.component.html',
-  styleUrls: ['./weather-hero.component.scss'],
-  standalone: true,
-  imports: [DatePipe, DecimalPipe, TranslatePipe, TruncatePipe, SunTimeComponent, LoaderComponent]
+    selector: 'weather-hero',
+    templateUrl: './weather-hero.component.html',
+    styleUrls: ['./weather-hero.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    imports: [DatePipe, DecimalPipe, TranslatePipe, TruncatePipe, SunTimeComponent, LoaderComponent]
 })
 export class WeatherHeroComponent {
   @Input() currentWeather: CurrentWeather | null = null;

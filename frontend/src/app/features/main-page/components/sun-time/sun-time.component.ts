@@ -1,9 +1,10 @@
-import { Component, ElementRef, Input, NgZone, OnChanges, SimpleChanges, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, NgZone, OnChanges, SimpleChanges, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 
 @Component({
     selector: 'sun-time',
     templateUrl: './sun-time.component.html',
     styleUrls: ['./sun-time.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: true
 })
 export class SunTimeComponent implements OnChanges {

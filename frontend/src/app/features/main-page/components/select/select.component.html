@@ -4,9 +4,11 @@
   </div>
   @if(dropdownOpen) {
     <div class="dropdown-list">
-      <div class="option" *ngFor="let option of options" (click)="selectOption($event, option)">
-        {{ option.value | translate }}
-      </div>
+      @for (option of options; track option) {
+        <div class="option" (click)="selectOption($event, option)">
+          {{ option.value | translate }}
+        </div>
+      }
     </div>
   }
 </div>

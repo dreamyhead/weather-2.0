@@ -1,4 +1,4 @@
-import { Component, ViewChild, inject, signal } from '@angular/core';
+import { Component, ViewChild, inject, signal, ChangeDetectionStrategy } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { StyleService } from '../ui/shared/services/style.service';
 import { RestService } from '../ui/shared/services/rest.service';
@@ -16,15 +16,15 @@ import { TranslatePipe } from '../ui/shared/pipes/translate.pipe';
     selector: 'main-page',
     templateUrl: './main-page.component.html',
     styleUrls: ['./main-page.component.scss'],
-    standalone: true,
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [
-      CardComponent,
-      SearchInputComponent,
-      TranslatePipe,
-      WeatherHeroComponent,
-      WeatherMapComponent,
-      ForecastListComponent,
-      ForecastChartComponent
+        CardComponent,
+        SearchInputComponent,
+        TranslatePipe,
+        WeatherHeroComponent,
+        WeatherMapComponent,
+        ForecastListComponent,
+        ForecastChartComponent
     ]
 })
 export class MainPageComponent {

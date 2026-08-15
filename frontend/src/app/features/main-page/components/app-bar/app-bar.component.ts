@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component, signal, ChangeDetectionStrategy } from '@angular/core';
 import { StyleService } from '../../../ui/shared/services/style.service';
 import { TranslationService } from '../../../ui/shared/services/translation.service';
 import { TranslatePipe } from '../../../ui/shared/pipes/translate.pipe';
@@ -7,7 +7,7 @@ import { TranslatePipe } from '../../../ui/shared/pipes/translate.pipe';
     selector: 'app-bar',
     templateUrl: './app-bar.component.html',
     styleUrls: ['./app-bar.component.scss'],
-    standalone: true,
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [TranslatePipe]
 })
 

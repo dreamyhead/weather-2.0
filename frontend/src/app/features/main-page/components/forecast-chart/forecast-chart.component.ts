@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, Input, OnChanges, OnDestroy, SimpleChanges, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, Input, OnChanges, OnDestroy, SimpleChanges, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { ForecastWeather } from '../../../ui/shared/interfaces/ForecastWeather';
 import { TranslatePipe } from '../../../ui/shared/pipes/translate.pipe';
 
@@ -51,11 +51,11 @@ const TOOLTIP_GAP_BASE = 14;
 const TOOLTIP_ARROW_BASE = 7;
 
 @Component({
-  selector: 'forecast-chart',
-  templateUrl: './forecast-chart.component.html',
-  styleUrls: ['./forecast-chart.component.scss'],
-  standalone: true,
-  imports: [TranslatePipe]
+    selector: 'forecast-chart',
+    templateUrl: './forecast-chart.component.html',
+    styleUrls: ['./forecast-chart.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    imports: [TranslatePipe]
 })
 export class ForecastChartComponent implements AfterViewInit, OnChanges, OnDestroy {
   @Input() forecastWeather: ForecastWeather | null = null;

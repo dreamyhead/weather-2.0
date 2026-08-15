@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, EventEmitter, Input, NgZone, OnChanges, OnDestroy, Output, SimpleChanges, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, EventEmitter, Input, NgZone, OnChanges, OnDestroy, Output, SimpleChanges, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { firstValueFrom } from 'rxjs';
 import L from 'leaflet';
@@ -13,11 +13,11 @@ export interface MapFocusLocation {
 }
 
 @Component({
-  selector: 'weather-map',
-  templateUrl: './weather-map.component.html',
-  styleUrls: ['./weather-map.component.scss'],
-  standalone: true,
-  imports: [TranslatePipe, SelectComponent]
+    selector: 'weather-map',
+    templateUrl: './weather-map.component.html',
+    styleUrls: ['./weather-map.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    imports: [TranslatePipe, SelectComponent]
 })
 export class WeatherMapComponent implements AfterViewInit, OnChanges, OnDestroy {
   @Input() focusLocation: MapFocusLocation | null = null;
@@ -84,7 +84,7 @@ export class WeatherMapComponent implements AfterViewInit, OnChanges, OnDestroy 
 
   private placeMarker(lat: number, lon: number) {
     const weatherIcon = L.icon({
-      iconUrl: '/assets/icons/point.png',
+      iconUrl: 'assets/icons/point.png',
       iconSize: [32, 32],
     });
 
@@ -155,7 +155,7 @@ export class WeatherMapComponent implements AfterViewInit, OnChanges, OnDestroy 
 
     if (!this.windData) {
       this.windData = await firstValueFrom(
-        this.http.get<unknown[]>('/assets/wind/wind-global.json')
+        this.http.get<unknown[]>('assets/wind/wind-global.json')
       );
     }
 

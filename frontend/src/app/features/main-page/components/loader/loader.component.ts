@@ -1,11 +1,11 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 import { NgStyle } from '@angular/common';
 
 @Component({
     selector: 'app-loader',
     templateUrl: './loader.component.html',
     styleUrls: ['./loader.component.scss'],
-    standalone: true,
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [NgStyle]
 })
 export class LoaderComponent {
