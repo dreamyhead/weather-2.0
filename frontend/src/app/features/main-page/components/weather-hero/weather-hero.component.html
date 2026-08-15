@@ -1,0 +1,68 @@
+@if (!currentWeather) {
+  <app-loader></app-loader>
+}
+@if (currentWeather) {
+  <div class="temperature-container">
+    <div class="temperature-title">
+      <div class="content">
+        <span class="hero-loc">{{ locationPrefixKey(currentWeather) | translate }} {{ locationLabel(currentWeather) }}</span>
+        <h1 class="current-temperature">{{currentWeather.main!.temp! >= 0 ? '+' : ''}}{{currentWeather.main!.temp | truncate}}°C</h1>
+        <span class="hero-desc">{{forecastCode(currentWeather.weather[0].icon!)}} — {{currentWeather.weather[0].description}}</span>
+      </div>
+    </div>
+    <div class="divider"></div>
+    <div class="gauge-grid">
+      <div class="gauge">
+        <span class="gauge-label">{{ 'feelLikeTemperature' | translate }}</span>
+        <span class="gauge-value">{{currentWeather.main?.feels_like | truncate}}°</span>
+      </div>
+      <div class="gauge">
+        <span class="gauge-label">{{ 'humidityLabel' | translate }}</span>
+        <span class="gauge-value">{{currentWeather.main?.humidity}}%</span>
+      </div>
+      <div class="gauge">
+        <span class="gauge-label">{{ 'pressureLabel' | translate }}</span>
+        <span class="gauge-value">{{currentWeather.main?.pressure}} {{ 'unitHpa' | translate }}</span>
+      </div>
+      <div class="gauge">
+        <span class="gauge-label">{{ 'windLabel' | translate }}</span>
+        <span class="gauge-value">
+          {{currentWeather.wind?.speed}} {{ 'unitMs' | translate }}
+          <span class="wind-arrow" [style.transform]="'rotate(' + (currentWeather.wind?.deg ?? 0) + 'deg)'">↑</span>
+        </span>
+      </div>
+    </div>
+    <div class="gauge-strip">
+      <div class="strip-row">
+        <span class="strip-label">{{ 'minMaxLabel' | translate }}</span>
+        <span class="strip-value">{{currentWeather.main?.temp_min | truncate}}° / {{currentWeather.main?.temp_max | truncate}}°</span>
+      </div>
+      <div class="strip-row">
+        <span class="strip-label">{{ 'cloudinessLabel' | translate }}</span>
+        <span class="strip-value">{{currentWeather.clouds?.all}}%</span>
+      </div>
+      <div class="strip-row">
+        <span class="strip-label">{{ 'visibilityLabel' | translate }}</span>
+        <span class="strip-value">{{(currentWeather.visibility ?? 0) / 1000 | number:'1.0-1'}} {{ 'unitKm' | translate }}</span>
+      </div>
+      @if (currentWeather.wind?.gust) {
+        <div class="strip-row">
+          <span class="strip-label">{{ 'gustLabel' | translate }}</span>
+          <span class="strip-value">{{currentWeather.wind?.gust | truncate}} {{ 'unitMs' | translate }}</span>
+        </div>
+      }
+      <div class="strip-row">
+        <span class="strip-label">{{ 'sunriseLabel' | translate }}</span>
+        <span class="strip-value">{{currentWeather.sys?.sunrise! * 1000 | date:'HH:mm'}}</span>
+      </div>
+      <div class="strip-row">
+        <span class="strip-label">{{ 'sunsetLabel' | translate }}</span>
+        <span class="strip-value">{{currentWeather.sys?.sunset! * 1000 | date:'HH:mm'}}</span>
+      </div>
+    </div>
+    <div class="sun-strip">
+      <span class="gauge-label">{{ 'sunMoonPathLabel' | translate }}</span>
+      <sun-time [options]="currentWeather.sys"></sun-time>
+    </div>
+  </div>
+}

@@ -1,15 +1,22 @@
-/* You can add global styles to this file, and also import other style files */
+@import 'app/features/ui/shared/styles/themes.scss';
+
 html, body {
     width: 100%;
     height: 100%;
     margin: 0;
-    font-family: "Roboto Mono", monospace;
+    font-family: var(--wx-font-body);
+    -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  background: var(--wx-bg);
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .divider {
   height: 1px;
-  box-shadow: 0 0 10px #dcdcdc;
-  background-color: #dcdcdc;
+  box-shadow: 0 0 10px var(--wx-rule);
+  background-color: var(--wx-rule);
   width: 100%;
 }
 

@@ -1,231 +1,32 @@
-<div class="grid" [ngClass]="darkMode ? 'dark-mode' : 'light-mode'">
+<div class="grid">
   <div class="grid-container">
     <div class="grid-item">
       <app-card>
-        @if (!currentWeather) {
-          <app-loader></app-loader>
-        }
-        @if (currentWeather) {
-          <div class="temperature-container" [ngStyle]="{ 'background': getBackground() }">
-            <div class="temperature-title">
-              <div class="content">
-                <span>{{ 'currentTemperature' | translate }} {{currentWeather.name}}, {{currentWeather.sys?.country}}</span>
-                <h1 class="current-temperature">+{{currentWeather.main!.temp | truncate}}°C</h1>
-                <span>{{currentWeather.weather[0].description}}</span>
-              </div>
-              <!-- <div class="content">
-                <app-weather-state [type]="currentWeather.weather[0].icon"></app-weather-state>
-              </div> -->
-            </div>
-          </div>
-          <div class="divider"></div>
-          <div class="description-container">
-            <div class="column">
-              <div class="row">
-                <strong>Город: </strong><span>{{currentWeather.name}}</span>
-              </div>
-              <div class="row">
-                <strong>Дата запроса: </strong><span>{{currentWeather.dt! * 1000 | date:'dd.MM.yyyy'}}</span>
-              </div>
-              <div class="row">
-                <strong>Время запроса: </strong><span>{{currentWeather.dt! * 1000 | date:'HH:mm'}}</span>
-              </div>
-              <div class="row">
-                <strong>Время восхода: </strong><span>{{currentWeather.sys?.sunrise! * 1000 | date:'HH:mm'}}</span>
-              </div>
-              <div class="row">
-                <strong>Время заката: </strong><span>{{currentWeather.sys?.sunset! * 1000 | date:'HH:mm'}}</span>
-              </div>
-            </div>
-            <div class="column">
-              <sun-time></sun-time>
-            </div>
-          </div>
-        }
+        <weather-hero [currentWeather]="currentWeather()"></weather-hero>
       </app-card>
     </div>
     <div class="grid-item">
       <app-card>
-        <div class="card-title">
-          <strong>Погодные карты</strong>
-          <span class="example-spacer"></span>
-          <app-select [title]="layerMode"
-                      (optionSelected)="changeMode($event)"
-                      [options]="layerModes">
-          </app-select>
-        </div>
-        <div class="map-container">
-          <div id="map"></div>
-        </div>
+        <weather-map [focusLocation]="mapFocus()" (mapClicked)="onMapClicked($event)"></weather-map>
       </app-card>
     </div>
     <div class="grid-item">
       <app-card>
         <div class="search-container">
-          <search-input [label]="'Город'"
+          <search-input [label]="'cityLabel' | translate"
                         (valueChange)="onValueChange($event)"
                         (submitClick)="submitSearch()">
           </search-input>
-          <!-- <button class="search-btn"
-                  (click)="submitSearch()">
-            <span class="material-symbols-rounded">
-              send
-            </span>
-          </button> -->
         </div>
-        <div class="five-days-container">
+        <div class="forecast-body">
+          <div class="forecast-lists">
+            <forecast-list [forecastWeather]="forecastWeather()" [enableEnglish]="enableEnglish()"></forecast-list>
+          </div>
           <div class="plot">
-            <div style="text-align: center; margin-bottom: 20px;">
-              <button [class.active]="currentGraph === 'one-day'" (click)="switchGraph('one-day')">One Day</button>
-              <button [class.active]="currentGraph === 'four-days'" (click)="switchGraph('four-days')">Four Days</button>
-            </div>
-            <canvas #myCanvas width="800" ></canvas>
-          </div>
-          <div class="carousel"
-              (mousedown)="onMouseDown($event)"
-              (mouseup)="onMouseUp($event)"
-              (mousemove)="onMouseMove($event)"
-              (mouseleave)="onMouseLeave($event)"
-              (touchstart)="onTouchStart($event)"
-              (touchmove)="onTouchMove($event)"
-              (touchend)="onTouchEnd($event)">
-            <div class="carousel-inner" [style.transform]="'translateX(-' + currentSlide * 100 + '%)'">
-              @if (!forecastWeather) {
-                <app-loader></app-loader>
-              }
-              @if (forecastWeather) {
-                <div class="carousel-item" *ngFor="let item of forecastWeather.list">
-                  <div class="day-card">
-                    <h3>{{ item.dt * 1000 | date:'dd.MM.yyyy'}}</h3>
-                    <p>{{ item.main.temp }}°C</p>
-                    <p>{{ item.weather[0].description }}</p>
-                  </div>
-                </div>
-                <div style="width: 600px; height: 400px;">
-                  <canvas #myCanvas width="600" height="400"></canvas>
-                </div>
-              }
-            </div>
+            <forecast-chart [forecastWeather]="forecastWeather()" [enableEnglish]="enableEnglish()"></forecast-chart>
           </div>
         </div>
       </app-card>
     </div>
-</div>
-
-
-    <!-- <app-card>
-      @if (!currentWeather) {
-        <div class="temperature-container">
-          <div class="temperature-title">
-            <search-input [label]="'Город'"
-                          (valueChange)="onValueChange($event)">
-            </search-input>
-          </div>
-        </div>
-      }
-      @if (currentWeather) {
-        <div class="temperature-container" [ngStyle]="{ 'background': getBackground() }">
-          <div class="temperature-title">
-            <div class="content">
-              <span>{{ 'currentTemperature' | translate }} {{currentWeather.name}}, {{currentWeather.sys?.country}}</span>
-              <h1 class="current-temperature">+{{currentWeather.main!.temp | truncate}}°C</h1>
-              <span>{{currentWeather.weather[0].description}}</span>
-            </div>
-            <div class="content">
-              <app-weather-state [type]="currentWeather.weather[0].icon"></app-weather-state>
-            </div>
-          </div>
-        </div>
-        <div class="divider"></div>
-        <div class="search-container">
-          <search-input [label]="'Город'"
-                        (valueChange)="onValueChange($event)"
-                        (submitClick)="submitSearch()">
-          </search-input>
-          <button class="search-btn"
-                  (click)="submitSearch()">
-            <span class="material-symbols-rounded">
-              send
-            </span>
-          </button>
-        </div>
-        <div class="divider"></div>
-        <div class="detail-container">
-          <div class="details">
-            <div class="description">
-              <div><h2>Детали:</h2></div>
-              <div class="row">
-                <strong>Город: </strong><span>{{currentWeather.name}}</span>
-              </div>
-              <div class="row">
-                <strong>Дата запроса: </strong><span>{{currentWeather.dt! * 1000 | date:'dd.MM.yyyy'}}</span>
-              </div>
-              <div class="row">
-                <strong>Время запроса: </strong><span>{{currentWeather.dt! * 1000 | date:'HH:mm'}}</span>
-              </div>
-              <div class="row">
-                <strong>Время восхода: </strong><span>{{currentWeather.sys?.sunrise! * 1000 | date:'HH:mm'}}</span>
-              </div>
-              <div class="row">
-                <strong>Время заката: </strong><span>{{currentWeather.sys?.sunset! * 1000 | date:'HH:mm'}}</span>
-              </div>
-            </div>
-            <div class="photo">
-              <sun-time [options]="currentWeather.sys"></sun-time>
-            </div>
-            <div class="full-description">
-              <div class="row">asdasd</div>
-              <div class="divider"></div>
-              <div class="row">asdasd</div>
-              <div class="divider"></div>
-              <div class="row">asdasd</div>
-              <div class="divider"></div>
-              <div class="row">asdasd</div>
-              <div class="divider"></div>
-              <div class="row">asdasd</div>
-              <div class="divider"></div>
-              <div class="row">asdasd</div>
-              <div class="divider"></div>
-              <div class="row">asdasd</div>
-              <div class="divider"></div>
-              <div class="row">asdasd</div>
-              <div class="divider"></div>
-              <div class="row">asdasd</div>
-              <div class="divider"></div>
-              <div class="row">asdasd</div>
-              <div class="divider"></div>
-              <div class="row">asdasd</div>
-              <div class="divider"></div>
-            </div>
-          </div>
-          <div class="description">
-            <div class="row">Влажность: {{currentWeather.main?.humidity}}</div>
-            <div class="row">Давление: {{currentWeather.main?.pressure}}</div>
-            <div class="row">Атмосферное давление, земля: {{currentWeather.main?.grnd_level ? currentWeather.main?.grnd_level : '-'}}</div>
-            <div class="row">Атмосферное давление, море: {{currentWeather.main?.sea_level  ? currentWeather.main?.sea_level : '-'}}</div>
-          </div>
-        </div>
-      }
-    </app-card>
   </div>
-  <div class="grid-container">
-    <div class="grid-item">
-      <app-card>
-        <div class="card-title">
-          <strong>Погодные карты</strong>
-          <span class="example-spacer"></span>
-          <app-select [title]="layerMode"
-                      (optionSelected)="changeMode($event)"
-                      [options]="layerModes">
-          </app-select>
-        </div>
-        <div class="map-container">
-          <div id="map"></div>
-        </div>
-      </app-card>
-    </div>
-    <div class="grid-item">
-      <app-card>
-      </app-card>
-    </div>
-  </div> -->
+</div>

@@ -1,0 +1,162 @@
+:host {
+  width: 100%;
+  height: 100%;
+  padding: 1rem clamp(1rem, 0.5rem + 2vw, 2rem);
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.chart {
+  display: block;
+  width: 100%;
+  flex: 1 1 auto;
+  min-height: 220px;
+  aspect-ratio: 1000 / 320;
+  --cfs: 1;
+}
+
+@media (max-width: 560px) {
+  .chart {
+    aspect-ratio: 1000 / 560;
+    min-height: 260px;
+  }
+}
+
+.chart-grid {
+  stroke: var(--wx-rule);
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+}
+
+.chart-axis-label {
+  font-family: var(--wx-font-num);
+  font-size: calc(13px * var(--cfs));
+  fill: var(--wx-ink-soft);
+  text-anchor: end;
+}
+
+.chart-area {
+  opacity: 0.9;
+}
+
+.chart-line {
+  stroke: var(--wx-accent);
+  stroke-width: 3;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+  vector-effect: non-scaling-stroke;
+}
+
+.chart-dot {
+  fill: var(--wx-panel);
+  stroke: var(--wx-accent);
+  stroke-width: 2;
+  vector-effect: non-scaling-stroke;
+  pointer-events: none;
+  transform-box: fill-box;
+  transform-origin: center;
+  transition: transform 0.15s ease;
+}
+
+.chart-dot.active {
+  transform: scale(1.6);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .chart-dot {
+    transition: none;
+  }
+}
+
+.chart-x-label {
+  font-family: var(--wx-font-num);
+  font-size: calc(12px * var(--cfs));
+  fill: var(--wx-ink-soft);
+}
+
+.chart-hit {
+  fill: transparent;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  tap-highlight-color: transparent;
+}
+
+.chart-tooltip-guide {
+  stroke: var(--wx-ink-soft);
+  stroke-width: 1;
+  stroke-dasharray: 3 3;
+  vector-effect: non-scaling-stroke;
+  pointer-events: none;
+}
+
+.chart-tooltip-arrow {
+  fill: var(--wx-panel);
+  stroke: var(--wx-accent);
+  stroke-width: 1.5;
+  pointer-events: none;
+}
+
+.chart-tooltip-box {
+  fill: var(--wx-panel);
+  stroke: var(--wx-accent);
+  stroke-width: 1.5;
+  filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.5));
+  pointer-events: none;
+}
+
+.chart-tooltip-temp {
+  font-family: var(--wx-font-num);
+  font-size: calc(19px * var(--cfs));
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  fill: var(--wx-accent);
+  pointer-events: none;
+}
+
+.chart-tooltip-code {
+  font-family: var(--wx-font-num);
+  font-size: calc(10px * var(--cfs));
+  letter-spacing: 0.05em;
+  fill: var(--wx-accent-2);
+  text-anchor: end;
+  pointer-events: none;
+}
+
+.chart-tooltip-label {
+  font-family: var(--wx-font-num);
+  font-size: calc(10.5px * var(--cfs));
+  letter-spacing: 0.03em;
+  fill: var(--wx-ink-soft);
+  pointer-events: none;
+}
+
+.graph-toggle {
+  flex: 0 0 auto;
+  text-align: center;
+  margin-bottom: 20px;
+
+  button {
+    padding: 10px 20px;
+    font-size: 0.85rem;
+    font-family: var(--wx-font-num);
+    text-transform: var(--wx-label-case);
+    letter-spacing: var(--wx-label-tracking);
+    color: var(--wx-ink-soft);
+    cursor: pointer;
+    border: none;
+    background-color: transparent;
+    border-bottom: 2px solid transparent;
+    transition: border-color 0.2s ease, color 0.2s ease;
+  }
+
+  button:focus {
+    outline: none;
+  }
+
+  button.active {
+    color: var(--wx-ink);
+    border-bottom-color: var(--wx-accent);
+  }
+}

@@ -1,0 +1,198 @@
+@import '../../../ui/shared/styles/common.scss';
+
+:host {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.temperature-container {
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  border-radius: var(--wx-radius);
+  background: var(--wx-panel);
+  animation: fadeIn 0.4s ease forwards;
+  display: flex;
+  flex-direction: column;
+}
+
+.current-temperature {
+  font-size: clamp(2.4rem, 1.2rem + 4vw, 4.2rem);
+  font-family: var(--wx-font-display);
+  font-weight: var(--wx-temp-weight);
+  font-variant-numeric: tabular-nums;
+  color: var(--wx-accent);
+  margin: $sp-4 0;
+}
+
+.temperature-title {
+  @include flex(row, flex-start, space-between);
+
+  width: 100%;
+  padding: clamp(1.25rem, 0.5rem + 3vw, 3rem);
+  box-sizing: border-box;
+  gap: clamp(1rem, 0.4rem + 2.5vw, 3rem);
+
+  .content {
+    @include flex(column, flex-start, center);
+    color: var(--wx-ink);
+    min-width: 0;
+  }
+}
+
+.hero-loc {
+  font-size: 0.9rem;
+  letter-spacing: var(--wx-label-tracking);
+  text-transform: var(--wx-label-case);
+  color: var(--wx-ink-soft);
+}
+
+.hero-desc {
+  font-size: 1.05rem;
+  color: var(--wx-ink-soft);
+}
+
+.gauge-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.75rem;
+  margin: 1.5rem clamp(1.25rem, 0.5rem + 3vw, 3rem) 0;
+}
+
+@media (max-width: 560px) {
+  .gauge-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.gauge {
+  background: var(--wx-bg);
+  border: 1px solid var(--wx-rule);
+  border-radius: var(--wx-radius);
+  box-shadow: var(--wx-shadow);
+  padding: 0.9rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.gauge-label {
+  font-size: 0.66rem;
+  letter-spacing: var(--wx-label-tracking);
+  text-transform: var(--wx-label-case);
+  color: var(--wx-ink-soft);
+}
+
+.gauge-value {
+  align-self: flex-start;
+  max-width: 100%;
+  font-family: var(--wx-font-num);
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--wx-accent);
+  font-variant-numeric: tabular-nums;
+  background: color-mix(in srgb, var(--wx-accent) 14%, transparent);
+  border-radius: 4px;
+  padding: 0.2rem 0.55rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@media (max-width: 560px) {
+  .gauge {
+    padding: 0.75rem 0.85rem;
+    min-width: 0;
+  }
+
+  .gauge-value {
+    font-size: 0.8rem;
+    padding: 0.2rem 0.4rem;
+  }
+}
+
+.gauge-strip {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0 1.5rem;
+  margin: 1.1rem clamp(1.25rem, 0.5rem + 3vw, 3rem) 1.75rem;
+  padding-top: 1.1rem;
+  border-top: 1px dashed var(--wx-rule);
+}
+
+@media (max-width: 560px) {
+  .gauge-strip {
+    grid-template-columns: 1fr;
+  }
+}
+
+.strip-row {
+  @include flex(row, baseline, space-between);
+  gap: 0.75rem;
+  padding: 0.45rem 0;
+  border-bottom: 1px solid var(--wx-rule);
+}
+
+.strip-label {
+  font-family: var(--wx-font-num);
+  font-size: 0.78rem;
+  color: var(--wx-ink-soft);
+  text-transform: var(--wx-label-case);
+  letter-spacing: var(--wx-label-tracking);
+}
+
+.strip-value {
+  font-family: var(--wx-font-num);
+  font-size: 0.82rem;
+  color: var(--wx-ink);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.wind-arrow {
+  display: inline-block;
+  font-size: 0.8em;
+  line-height: 1;
+  transition: transform 0.3s ease;
+}
+
+.sun-strip {
+  @include flex(row, center, space-between);
+  flex-wrap: wrap;
+  gap: 0.75rem 1rem;
+  padding: 1.1rem clamp(1.25rem, 0.5rem + 3vw, 3rem);
+  box-sizing: border-box;
+  border-top: 1px solid var(--wx-rule);
+
+  .gauge-label {
+    flex: 0 1 auto;
+    min-width: 0;
+  }
+
+  sun-time {
+    flex: 0 1 auto;
+    min-width: 0;
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 560px) {
+  .sun-strip {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

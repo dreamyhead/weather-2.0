@@ -1,0 +1,21 @@
+@import '../../../ui/shared/styles/common.scss';
+
+:host {
+  display: block;
+  width: 200px;
+  min-width: 0;
+  max-width: 100%;
+
+  .container {
+    @include flex(row, center, flex-end);
+    min-width: 0;
+  }
+
+  canvas {
+    display: block;
+    width: 100%;
+    min-width: 0;
+    height: auto;
+  }
+}
+

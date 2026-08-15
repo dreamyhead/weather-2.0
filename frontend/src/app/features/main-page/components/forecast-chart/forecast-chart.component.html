@@ -1,0 +1,38 @@
+<div class="graph-toggle">
+  <button [class.active]="currentGraph === 'one-day'" (click)="switchGraph('one-day')">1D</button>
+  <button [class.active]="currentGraph === 'four-days'" (click)="switchGraph('four-days')">4D</button>
+</div>
+<svg #chartSvg class="chart" [attr.viewBox]="chartViewBox" [style.--cfs]="chartFontScale" preserveAspectRatio="xMidYMid meet" role="img" [attr.aria-label]="'chartAriaLabel' | translate">
+  <defs>
+    <linearGradient id="chartFill" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="var(--wx-accent)" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="var(--wx-accent)" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  @for (line of chartGridLines; track line.y) {
+    <line class="chart-grid" [attr.x1]="chartPadLeft" x2="992" [attr.y1]="line.y" [attr.y2]="line.y" />
+    <text class="chart-axis-label" [attr.x]="chartPadLeft - 6 * chartFontScale" [attr.y]="line.y - 6 * chartFontScale">{{ line.label }}</text>
+  }
+  <path class="chart-area" [attr.d]="chartAreaPath" fill="url(#chartFill)" />
+  <path class="chart-line" [attr.d]="chartLinePath" fill="none" />
+  @for (point of chartPoints; track point.x) {
+    <circle class="chart-dot" [class.active]="hoveredPoint === point" [attr.cx]="point.x" [attr.cy]="point.y" [attr.r]="4 * chartFontScale" />
+    @if (point.showLabel) {
+      <text class="chart-x-label" [attr.x]="point.x" [attr.y]="chartBaseline + 24" [attr.text-anchor]="point.labelAnchor">{{ point.label }}</text>
+    }
+  }
+  @if (hoveredPoint && chartTooltip) {
+    <line class="chart-tooltip-guide" [attr.x1]="hoveredPoint.x" [attr.x2]="hoveredPoint.x" [attr.y1]="hoveredPoint.y" [attr.y2]="chartBaseline" />
+    <polygon class="chart-tooltip-arrow" [attr.points]="chartTooltip.arrowPoints" />
+    <rect class="chart-tooltip-box" [attr.x]="chartTooltip.boxX" [attr.y]="chartTooltip.boxY" [attr.width]="chartTooltip.boxWidth" [attr.height]="chartTooltip.boxHeight" [attr.rx]="6 * chartFontScale" />
+    <text class="chart-tooltip-temp" [attr.x]="chartTooltip.tempX" [attr.y]="chartTooltip.textY1">{{ hoveredPoint.temp }}°</text>
+    <text class="chart-tooltip-code" [attr.x]="chartTooltip.codeX" [attr.y]="chartTooltip.textY1">{{ hoveredPoint.code }}</text>
+    <text class="chart-tooltip-label" [attr.x]="chartTooltip.labelX" [attr.y]="chartTooltip.textY2">{{ hoveredPoint.label }}</text>
+  }
+  @for (point of chartPoints; track point.x) {
+    <circle class="chart-hit"
+            [attr.cx]="point.x" [attr.cy]="point.y" [attr.r]="18 * chartFontScale"
+            (mouseenter)="hoveredPoint = point"
+            (mouseleave)="hoveredPoint = null" />
+  }
+</svg>

@@ -1,0 +1,12 @@
+<div class="select-options" (click)="toggleDropdown()">
+  <div class="selected-option">
+    {{ selectedOption.value | translate }}
+  </div>
+  @if(dropdownOpen) {
+    <div class="dropdown-list">
+      <div class="option" *ngFor="let option of options" (click)="selectOption($event, option)">
+        {{ option.value | translate }}
+      </div>
+    </div>
+  }
+</div>

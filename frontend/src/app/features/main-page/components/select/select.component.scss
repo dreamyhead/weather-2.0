@@ -1,0 +1,63 @@
+@import '../../../ui/shared/styles/common.scss';
+
+.select-options {
+  position: relative;
+  width: 150px;
+  max-width: 40vw;
+  cursor: pointer;
+  border-radius: var(--wx-radius);
+  font-family: var(--wx-font-num);
+  font-size: 0.85rem;
+  text-transform: var(--wx-label-case);
+  letter-spacing: var(--wx-label-tracking);
+  color: inherit;
+}
+
+@media (max-width: 480px) {
+  .select-options {
+    width: 120px;
+    max-width: 46vw;
+    font-size: 0.75rem;
+  }
+}
+
+.selected-option {
+  box-sizing: border-box;
+  padding: 0.5rem;
+  border: 1px solid var(--wx-rule);
+  border-radius: var(--wx-radius);
+  transition: box-shadow 0.2s ease, border-color 0.2s ease;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.selected-option:hover {
+  border-color: var(--wx-accent);
+}
+
+.dropdown-list {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 1000;
+  width: 100%;
+  background-color: var(--wx-panel);
+  color: var(--wx-ink);
+  border: 1px solid var(--wx-rule);
+  border-radius: var(--wx-radius);
+  margin-top: 0.25rem;
+  box-shadow: var(--wx-shadow);
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.option {
+  padding: 0.5rem;
+  cursor: pointer;
+}
+
+.option:hover {
+  background-color: var(--wx-rule);
+}

@@ -1,0 +1,11 @@
+<div class="card-title">
+  <strong>{{ 'weatherMapsTitle' | translate }}</strong>
+  <span class="example-spacer"></span>
+  <app-select [title]="layerMode"
+              (optionSelected)="changeMode($event)"
+              [options]="layerModes">
+  </app-select>
+</div>
+<div class="map-container">
+  <div class="leaflet-map-el" #mapContainer></div>
+</div>

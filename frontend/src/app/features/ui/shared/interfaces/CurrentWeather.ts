@@ -1,5 +1,3 @@
-
-//ToDo: Rewrite this interface
 export interface CurrentWeather {
   coord?: {
     lon?: number,

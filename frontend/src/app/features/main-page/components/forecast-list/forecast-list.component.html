@@ -1,0 +1,32 @@
+@if (!forecastWeather) {
+  <app-loader></app-loader>
+}
+@if (forecastWeather) {
+  <div class="forecast-section">
+    <p class="forecast-label">{{ 'hourlyLabel' | translate }}</p>
+    <div class="hourly-strip">
+      @for (item of hourlyForecast; track item.dt) {
+        <div class="hour-card">
+          <span class="hour-time">{{ item.dt * 1000 | date:'HH:mm' }}</span>
+          <span class="hour-date">{{ item.date }}</span>
+          <span class="hour-code">{{ forecastCode(item.icon) }}</span>
+          <span class="hour-temp">{{ item.temp | truncate }}°</span>
+        </div>
+      }
+    </div>
+  </div>
+  <div class="divider"></div>
+  <div class="forecast-section">
+    <p class="forecast-label">{{ 'dailyLabel' | translate }}</p>
+    <div class="daily-strip">
+      @for (item of dailyForecast; track item.dt) {
+        <div class="day-card">
+          <span class="day-name">{{ dayLabel(item.dt) }}</span>
+          <span class="day-date">{{ item.date }}</span>
+          <span class="day-code">{{ forecastCode(item.icon) }}</span>
+          <span class="day-range"><b>{{ item.max | truncate }}°</b> / {{ item.min | truncate }}°</span>
+        </div>
+      }
+    </div>
+  </div>
+}

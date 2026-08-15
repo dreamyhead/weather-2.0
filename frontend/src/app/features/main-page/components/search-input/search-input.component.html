@@ -1,0 +1,15 @@
+<div class="container">
+  <div class="input-container">
+    <input class="ui-input" 
+           type="text" 
+           placeholder="" 
+           id="search"
+           [(ngModel)]="inputValue"
+           (keydown.enter)="submit()"
+           autocomplete="off">
+    <label for="search"
+           class="placeholder">
+      {{label}}
+    </label>
+  </div>
+</div>

@@ -1,0 +1,90 @@
+:host {
+  display: block;
+  width: 100%;
+  min-width: 0;
+}
+
+.forecast-section {
+  width: 100%;
+  padding: 1rem clamp(1rem, 0.5rem + 2vw, 2rem) 0;
+  box-sizing: border-box;
+}
+
+.forecast-label {
+  margin: 0 0 0.75rem;
+  font-family: var(--wx-font-num);
+  font-size: 0.68rem;
+  letter-spacing: var(--wx-label-tracking);
+  text-transform: var(--wx-label-case);
+  color: var(--wx-ink-soft);
+}
+
+.hourly-strip,
+.daily-strip {
+  display: flex;
+  gap: 0.6rem;
+  overflow-x: auto;
+  padding-bottom: 0.5rem;
+  scrollbar-width: thin;
+  scrollbar-color: var(--wx-rule) transparent;
+}
+
+.hour-card,
+.day-card {
+  flex: 0 0 auto;
+  min-width: 74px;
+  text-align: center;
+  padding: 0.75rem 0.6rem;
+  border-radius: var(--wx-radius);
+  border: 1px solid var(--wx-rule);
+  background: var(--wx-bg);
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.hour-time,
+.day-name {
+  font-family: var(--wx-font-num);
+  font-size: 0.72rem;
+  letter-spacing: var(--wx-label-tracking);
+  text-transform: var(--wx-label-case);
+  color: var(--wx-ink-soft);
+}
+
+.hour-date,
+.day-date {
+  font-family: var(--wx-font-num);
+  font-size: 0.62rem;
+  color: var(--wx-ink-soft);
+  opacity: 0.75;
+  margin-top: -0.2rem;
+}
+
+.hour-code,
+.day-code {
+  font-family: var(--wx-font-num);
+  font-size: 0.68rem;
+  letter-spacing: var(--wx-label-tracking);
+  text-transform: var(--wx-label-case);
+  color: var(--wx-accent-2);
+}
+
+.hour-temp {
+  font-family: var(--wx-font-num);
+  font-size: 1.05rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--wx-ink);
+}
+
+.day-range {
+  font-family: var(--wx-font-num);
+  font-size: 0.85rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--wx-ink-soft);
+
+  b {
+    color: var(--wx-ink);
+    font-weight: 600;
+  }
+}

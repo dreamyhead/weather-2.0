@@ -1,0 +1,63 @@
+@import '../../../ui/shared/styles/common.scss';
+
+:host {
+  color: var(--wx-ink);
+  font-family: var(--wx-font-body);
+  box-sizing: border-box;
+}
+
+.container {
+  @include flex(row, center, center);
+  width: 100%;
+  padding: 1rem;
+  box-sizing: border-box;
+
+  .input-container {
+    position: relative;
+    box-sizing: border-box;
+    width: 100%;
+  }
+
+  .ui-input {
+    width: 100%;
+    padding: 1rem;
+    font-size: 1rem;
+    font-family: inherit;
+    color: var(--wx-ink);
+    border: 1px solid var(--wx-rule);
+    border-radius: var(--wx-radius);
+    box-sizing: border-box;
+    background-color: transparent;
+    transition: border-color 0.3s, box-shadow 0.3s;
+
+    &:focus {
+      border-color: var(--wx-accent);
+      box-shadow: 0 0 0 1px var(--wx-accent);
+      outline: none;
+    }
+
+    &:not(:focus) + .placeholder {
+      transform: translateY(0);
+      font-size: 1rem;
+      color: var(--wx-ink-soft);
+    }
+
+    &:focus + .placeholder,
+    &:not(:placeholder-shown) + .placeholder {
+      transform: translateY(-1.5rem);
+      font-size: 0.75rem;
+      color: var(--wx-accent);
+    }
+  }
+
+  .placeholder {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    padding: 0rem 0.25rem;
+    background-color: var(--wx-panel);
+    color: var(--wx-ink-soft);
+    pointer-events: none;
+    transition: all 0.2s ease, background-color 0.3s ease;
+  }
+}

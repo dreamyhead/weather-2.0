@@ -4,327 +4,153 @@
   @include flex(column, unset, unset);
 
   flex: 1;
+  min-height: 0;
   overflow-y: auto;
 
-  .grid {
-    @include flex(row, center, flex-start);
+  scrollbar-width: thin;
+  scrollbar-color: var(--wx-rule) transparent;
 
-    height: 100%;
+  &::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: var(--wx-rule);
+    border-radius: 999px;
+    border: 2px solid transparent;
+    background-clip: padding-box;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background-color: var(--wx-ink-soft);
+    background-clip: padding-box;
+  }
+
+  .grid {
     width: 100%;
+    max-width: 1800px;
+    margin: 0 auto;
+    min-height: 100%;
     padding: $sp-4;
     box-sizing: border-box;
-    transition: color 0.1s ease, background-color 0.5s ease;
+    background: var(--wx-bg);
+    color: var(--wx-ink);
+    font-family: var(--wx-font-body);
+    transition: color 0.2s ease, background-color 0.3s ease;
+    display: flex;
+    flex-direction: column;
 
     .grid-container {
-      @include flex(row, center, center);
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: $sp-4;
       width: 100%;
-      height: 100%;
-      flex-wrap: wrap;
       box-sizing: border-box;
 
       .grid-item {
         display: flex;
+        width: 100%;
         box-sizing: border-box;
+        animation: riseIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) backwards;
       }
 
-      .grid-item:nth-child(1),
+      .grid-item:nth-child(1) {
+        min-height: 300px;
+        animation-delay: 0.05s;
+      }
+
       .grid-item:nth-child(2) {
-        width: 50%;
-        height: 55%;
+        min-height: 320px;
+        animation-delay: 0.12s;
       }
 
       .grid-item:nth-child(3) {
-        width: 100%;
-        height: 45%;
+        min-height: 280px;
+        animation-delay: 0.19s;
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .grid-item {
+          animation: none;
+        }
       }
     }
   }
 
-  .light-mode {
-    background-color: rgb(255, 255, 255);
-    color: #000;
-  }
+  @media (min-width: 1000px) {
+    .grid .grid-container {
+      display: grid;
+      grid-template-columns: 1.7fr 1fr;
+      grid-template-rows: auto auto;
+      grid-template-areas: 'weather map' 'forecast forecast';
+      align-content: start;
 
-  .dark-mode {
-    background-color: rgb(32, 32, 32);
-    color: #fff;
-  }
-}
-
-.wait-container {
-  @include flex(row, center, center);
-
-  width: 100%;
-  height: 100%;
-  border-radius: 15px;
-  box-sizing: border-box;
-
-  .loader {
-    width: 48px;
-    height: 48px;
-    border: 5px solid #ffffff00;
-    border-bottom-color: #334cdb;
-    border-radius: 50%;
-    display: inline-block;
-    box-sizing: border-box;
-    animation: rotation 1s linear infinite;
-    }
-
-    @keyframes rotation {
-      0% {
-          transform: rotate(0deg);
+      .grid-item:nth-child(1) {
+        grid-area: weather;
       }
-      100% {
-          transform: rotate(360deg);
+
+      .grid-item:nth-child(2) {
+        grid-area: map;
+      }
+
+      .grid-item:nth-child(3) {
+        grid-area: forecast;
       }
     }
-}
-
-.map-container {
-  width: 100%;
-  height: 100%;
-
-  #map {
-    width: 100%;
-    height: 100%;
-    z-index: 1;
-    border-radius: 0px 0px 15px 15px;
   }
 }
-
-@media (max-width: 1200px) {
-  .grid .grid-container {
-    @include flex(column, center, center);
-    height: 100%;
-  }
-
-  .grid .grid-container .grid-item {
-    width: 100% !important;
-    height: calc(100% / 3) !important;
-  }
-}
-
 
 .search-container {
   width: 100%;
   @include flex(row, center, center);
-
-  .search-btn {
-    padding: 0.25rem;
-    min-width: 60px;
-    background-color: transparent;
-    border: none;
-    border-radius: 5px;
-    transition: box-shadow 0.1s ease;
-    cursor: pointer;
-
-    span {
-      font-size: 2rem;
-      color: #334cdb;
-    }
-  }
-
-  .search-btn:hover {
-    box-shadow: 0 0px 14px rgba(175, 175, 175, 0.76);
-    border-radius: 5px;
-  }
 }
 
-.five-days-container {
+.forecast-body {
   width: 100%;
-  @include flex(row, center, center);
-  height: 60%;
-  padding: 1rem;
-  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+
+  .forecast-lists {
+    width: 100%;
+    min-width: 0;
+  }
 
   .plot {
-    width: 50%;
-    height: 100%;
-    position: relative;
-
-    button {
-      padding: 10px 20px;
-      font-size: 16px;
-      cursor: pointer;
-      border: none;
-      background-color: transparent;
-      transition: border-bottom 0.3s ease;
-    }
-
-    button:focus {
-      outline: none;
-      border-bottom: 2px solid #007bff;
-    }
-
-    button.active {
-      border-bottom: 2px solid #007bff;
-    }
-
-  }
-
-  .carousel {
-    position: relative;
-    box-sizing: border-box;
-    width: 50%;
-    height: 100%;
-    overflow: hidden;
-  }
-
-  .carousel-inner {
-    display: flex;
-    transition: transform 0.5s ease;
-  }
-
-  .carousel-item {
-    min-width: 100%;
-    box-sizing: border-box;
-  }
-
-  .day-card {
-    text-align: center;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-top: 1px solid var(--wx-rule);
   }
 }
 
-// .map-container {
-//   width: 100%;
-//   height: 60%;
+@media (min-width: 900px) {
+  .forecast-body {
+    flex-direction: row;
+    align-items: stretch;
 
-//   flex: 3;
+    .forecast-lists {
+      flex: 1 1 55%;
+      min-width: 0;
+    }
 
-//   #map {
-//     width: 100%;
-//     height: 100%;
-//     z-index: 1;
-//     border-radius: 0px 0px 15px 15px;
-//   }
-// }
-
-// .detail-container {
-//   flex: 2;
-//   width: 100%;
-//   padding: 3rem;
-//   box-sizing: border-box;
-
-//   .details {
-//     flex-wrap: wrap;
-//     height: 100%;
-//     @include flex(row, flex-start, center);
-//     box-sizing: border-box;
-//   }
-
-//   .photo {
-//     @include flex(column, flex-end, center);
-//     width: 50%;
-//     height: 50%;
-//   }
-
-  .description-container {
-    @include flex(row, flex-start, center);
-    width: 100%;
-    height: 50%;
-    box-sizing: border-box;
-
-    .column {
-      @include flex(column, flex-start, center);
-      width: 50%;
-      height: 100%;
-      box-sizing: border-box;
-      padding: 1rem;
+    .plot {
+      flex: 1 1 45%;
+      min-width: 0;
+      border-top: none;
+      border-left: 1px solid var(--wx-rule);
     }
   }
-//     .row {
-//       @include flex(row, center, space-between);
-//       border-bottom: 1px solid #c9c9c9;
-//       width: 100%;
-//       padding: 1rem 0rem;
-//     }
-//   }
-
-//   .full-description{
-//     @include flex(column, flex-start, flex-end);
-//     width: 100%;
-//     height: 50%;
-//   }
-// }
-
-.temperature-container {
-  width: 100%;
-  height: 50%;
-  box-sizing: border-box;
-  border-radius: 15px 15px 0px 0px;
-  animation: fadeIn 2s forwards;
 }
 
-.current-temperature {
-  font-size: 3rem;
-  margin: $sp-4 0;
-}
-
-
-
-.temperature-title {
-  @include flex(row, flex-start, space-between);
-
-  flex: 2;
-  width: 100%;
-  height: 100%;
-  padding: 3rem 3rem $sp-5;
-  box-sizing: border-box;
-  gap: 3rem;
-
-  .content {
-    @include flex(column, flex-start, center);
-    color: white;
-    height: 100%;
-  }
-}
-
-@keyframes fadeIn {
+@keyframes riseIn {
   from {
     opacity: 0;
+    transform: translateY(14px);
   }
   to {
     opacity: 1;
+    transform: translateY(0);
   }
-}
-
-@keyframes slideIn {
-  from {
-    opacity: 1;
-    left: -50%;
-  }
-  to {
-    opacity: 1;
-    left: 15%;
-    transform: translateX(-50%);
-  }
-}
-
-.card-title {
-  @include flex(row, center, center);
-
-  width: 100%;
-  padding: $sp-4;
-  box-sizing: border-box;
-
-  strong {
-    font-size: 18px;
-  }
-
-  .example-spacer {
-    flex: 1 1 auto;
-  }
-}
-
-.container {
-  @include flex(column, center, flex-start);
-
-  width: 100%;
-  height: 100%;
-  border-radius: 15px;
-  box-sizing: border-box;
-  box-shadow: 0px 1.5px 5px #c9c9c9;
 }
