@@ -12,6 +12,10 @@ export interface MapFocusLocation {
   flyTo: boolean;
 }
 
+// Грузим напрямую из main, а не из своей сборки — так данные ветра
+// обновляются на лету, без пересборки и передеплоя приложения.
+const WIND_DATA_URL = 'https://raw.githubusercontent.com/dreamyhead/weather-2.0/main/frontend/public/assets/wind/wind-global.json';
+
 @Component({
     selector: 'weather-map',
     templateUrl: './weather-map.component.html',
@@ -155,7 +159,7 @@ export class WeatherMapComponent implements AfterViewInit, OnChanges, OnDestroy 
 
     if (!this.windData) {
       this.windData = await firstValueFrom(
-        this.http.get<unknown[]>('assets/wind/wind-global.json')
+        this.http.get<unknown[]>(WIND_DATA_URL)
       );
     }
 
